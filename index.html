@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,44 +10,36 @@
   <body>
     <nav id="main-nav">
       <a href="index.html">Home</a>
-      <a href="game.html">Allgemeinwissen Quiz</a>
-      <a href="#bill-hicks">Mathematik Quiz</a>
-      <a href="#stewart-francis">Internettechnologien Quiz</a>
-      <a href="#stewart-francis">Flaggen Quiz</a>
+      <a id="mathe" onclick="getIdFromUrl(this.id);">Mathe Quiz</a>
+      <a id="allgemein" onclick="getIdFromUrl(this.id);">Allgemeinwissen Quiz</a>
+      <a id="flagge" onclick="getIdFromUrl(this.id);">Internettechnologien Quiz</a>
+      <a id="internet" onclick="getIdFromUrl(this.id);">Flaggen Quiz</a>
     </nav>
-
     <div class="main">
       <section class="hero-section">
         <div class="card-grid">
-          <a id="mathe" class="card"  onclick="getIdFormA(this.id, this.href);">
+          <a id="mathe" class="card"  onclick="getIdFromUrl(this.id);">
             <div class="card__background" style="background-image: url(assets/img/mathBackground.jpg)"></div>
             <div class="card__content">
               <p class="card__category">Category</p>
               <h3 class="card__heading">Zum Mathe Quiz</h3>
             </div>
           </a>
-          <script language="javascript" type="text/javascript">
-            function getIdFormA(obj, url) {
-                 url = 'http://127.0.0.1:5500/game.html'
-                  location.href = url +"?id=" + obj;
-                 //window.alert(url += "?id=" + obj);
-           }
-         </script>
-          <a class="card" href="allgemeinquiz.html">
+          <a id="allgemein" class="card" onclick="getIdFromUrl(this.id);">
             <div class="card__background" style="background-image: url(assets/img/allgemeinWissen.jpg)"></div>
             <div class="card__content">
               <p class="card__category">Category</p>
               <h3 class="card__heading">Zum Allgemein-<br>wissens Quiz</h3>
             </div>
           </a>
-          <a class="card" href="Internettechnologienquiz.html">
+          <a id="internet" class="card" onclick="getIdFromUrl(this.id);">
             <div class="card__background" style="background-image: url(assets/img/internettechnologieBackground.jpg)"></div>
             <div class="card__content">
               <p class="card__category">Category</p>
               <h3 class="card__heading">Zum Internet-<br>technologien Quiz</h3>
             </div>
           </a>
-          <a class="card" href="flaggenquiz.html">
+          <a id="flagge" class="card" onclick="getIdFromUrl(this.id);">
             <div class="card__background" style="background-image: url(assets/img/flaggenBackground.jpg)"></div>
             <div class="card__content">
               <p class="card__category">Category</p>
@@ -80,5 +72,7 @@
       </div>
     </div>
     <script src="stickynavbar.js"></script>
+    <script src="game.js"></script>
+    <!-- Function to get ID from URL -->
   </body>
 </html>

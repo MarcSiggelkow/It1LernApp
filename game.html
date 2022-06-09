@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,10 +11,10 @@
   <body>
     <nav id="main-nav">
       <a href="index.html">Home</a>
-      <a href="game.html">Allgemeinwissen Quiz</a>
-      <a href="#bill-hicks">Mathematik Quiz</a>
-      <a href="#stewart-francis">Internettechnologien Quiz</a>
-      <a href="#stewart-francis">Flaggen Quiz</a>
+      <a id="mathe" onclick="getIdFromUrl(this.id);">Mathe Quiz</a>
+      <a id="allgemein" onclick="getIdFromUrl(this.id);">Allgemeinwissen Quiz</a>
+      <a id="flagge" onclick="getIdFromUrl(this.id);">Internettechnologien Quiz</a>
+      <a id="internet" onclick="getIdFromUrl(this.id);">Flaggen Quiz</a>
     </nav>
     <div class="container">
       <div id="loader"></div>

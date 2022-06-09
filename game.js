@@ -10,51 +10,85 @@ let acceptingAnswers = false;
 let score = 0;
 let questionCounter = 0;
 let availableQuesions = [];
-
+let categorySwitch = 0;
 let questions = [];
-let url_str = window.location;
-let url = new URL(url_str);
-let search_params = url.searchParams; 
-current_category = search_params.get('id');
+let counter = 0;
 
+//Gets the ID from the URL based on which category the User picked
+var baseUrl = (window.location).href;
+var koopId = baseUrl.substring(baseUrl.lastIndexOf('=') + 1);
 
+switch (koopId) {
+    case "mathe":
+        categorySwitch = 1;
+        console.log(categorySwitch);
+        break;
+    case "allgemein":
+        categorySwitch = 2;
+        console.log(categorySwitch);
+        break;
+    case "internet":
+        categorySwitch = 3;
+        console.log(categorySwitch);
+        break;
+    case "flagge":
+        categorySwitch = 4;
+        console.log(categorySwitch);
+        break;
+    default:
+      break;
+  }
 
-fetch(
-    'https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple'
-)
-    .then((res) => {
-        return res.json();
+const username = "marc.siggelkow@htw-dresden.de";
+const password = "ultraSafesPasswort";
+var url = "https://irene.informatik.htw-dresden.de:8888/api/quizzes"; //+ categorySwitch;
+
+// Example request options
+fetch(url, {
+    method: 'get', // Default is 'get'
+    mode: 'cors',
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      "Authorization": "Basic " + window.btoa(username + ":" + password)
     })
+  })
+  .then(response => response.json())
+  
+
+    //.then(response => response.json())
     .then((loadedQuestions) => {
-        questions = loadedQuestions.results.map((loadedQuestion) => {
+        console.log(loadedQuestions.content);
+        console.log(loadedQuestions.options);
+        console.log(loadedQuestions.text);
+        questions = loadedQuestions.content.map(( loadedQuestion) => {
+            console.log(loadedQuestion.text);
+            console.log(counter);
             const formattedQuestion = {
-                question: loadedQuestion.question,
+                question: loadedQuestion.text
             };
 
-            const answerChoices = [...loadedQuestion.incorrect_answers];
-            formattedQuestion.answer = Math.floor(Math.random() * 4) + 1;
-            answerChoices.splice(
-                formattedQuestion.answer - 1,
-                0,
-                loadedQuestion.correct_answer
-            );
+            const answerChoices = [... loadedQuestion.options];
+            counter +=1;
 
-            answerChoices.forEach((choice, index) => {
-                formattedQuestion['choice' + (index + 1)] = choice;
-            });
+            answerChoices.forEach((choice, index)  => {
+                formattedQuestion["choice" + (index+1)] = choice;
+            })
 
             return formattedQuestion;
-        });
-
+        })
+        console.log(questions);
+        //questions = loadedQuestions.options;
         startGame();
     })
     .catch((err) => {
         console.error(err);
     });
 
+
 //CONSTANTS
 const CORRECT_BONUS = 10;
 const MAX_QUESTIONS = 8;
+
 
 startGame = () => {
     questionCounter = 0;
@@ -120,3 +154,11 @@ incrementScore = (num) => {
 
 
 
+
+function getIdFromUrl(obj)
+    {
+      localUrl = 'http://127.0.0.1:5500/game.html'
+      location.href ="";
+      location.href = localUrl +"?id=" + obj;
+      //window.alert(url += "?id=" + obj);
+    }
