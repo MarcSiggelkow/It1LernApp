@@ -20,16 +20,16 @@ var koopId = baseUrl.substring(baseUrl.lastIndexOf('=') + 1);
 
 switch (koopId) {
     case "mathe":
-        categorySwitch = [500,501,502,503,504,505,506,507,508,509];
+        categorySwitch = [300,309];
         break;
     case "allgemein":
-        categorySwitch = [510,511,512,513,514,515,516,517,518,519];
+        categorySwitch = [310,319];
         break;
     case "internet":
-        categorySwitch = [520,521,522,523,524,525,526,527,528,529];
+        categorySwitch = [320,329];
         break;
     case "flagge":
-        categorySwitch = [530,531,532,533,534,535,536,537,538,539];
+        categorySwitch = [330,339];
         break;
     default:
       break;
@@ -38,12 +38,10 @@ switch (koopId) {
 const username = "marc.siggelkow@htw-dresden.de";
 const password = "ultraSafesPasswort";
 
-let test;
 
 
-let result  = [];
-let data = [];
-async function fetchApiCall(id){
+
+/*async function fetchApiCall(id){
   var url = "https://irene.informatik.htw-dresden.de:8888/api/quizzes/"+id;
   const response = await fetch(url, {
     method: 'get', // Default is 'get'
@@ -53,29 +51,88 @@ async function fetchApiCall(id){
       "Authorization": "Basic " + window.btoa(username + ":" + password)
     })
   })
-  let object = await response.json();
-  console.log(object);
-  questions = await object.map(async loadedQuestion => ({
-        question: loadedQuestion.text,
-        choice: loadedQuestion.options}));
   //the response have to be converted to json type file, so it can be used
-  return await questions;
+  let object = await response.json();
+  
+  appendObject(object);  
 };
 
-//Calls the function that fetches the data
-for(i = 310; i<320;i++) {
-    data.push(fetchApiCall(i));
+function formatQuestions(object) {
+    console.log(object);
+};
+
+function appendObject(object) {
+    data.push(object);
+    console.log(data),
+};*/
+
+
+// async function
+async function fetchAsync (id) {
+    var url = "https://irene.informatik.htw-dresden.de:8888/api/quizzes/"+id;
+    // await response of fetch call
+    let response = await fetch(url, {
+        method: 'get', // Default is 'get'
+        mode: 'cors',
+        headers: new Headers({
+          'Content-Type': 'application/json',
+          "Authorization": "Basic " + window.btoa(username + ":" + password)
+        })
+      });
+    // only proceed once promise is resolved
+    let data = await response.json();
+    // only proceed once second promise is resolved
+    return data;
+  }
+  
+  // trigger async function
+  // log response or catch error of fetch promise
+  const firstElement = categorySwitch.shift();
+const lastElement= categorySwitch.pop();
+
+let result  = [];
+let data = [];
+
+//Calls the function that fetches the data from API
+for(i = firstElement; i<= lastElement;i++) {
+    fetchAsync(i)
+        .then(data => formatQuestion(data))
+        .catch(reason => console.log(reason.message))
 }
 
-console.log(data);
 
+function formatQuestion(object) {
+    result.push(object);
+    console.log(result);
+    if(result.length === 10) {
+        questions = result.map((loadedQuestion) => {
+            const formattedQuestion = {
+                question: loadedQuestion.text,
+            };
+        
+            const answerChoices = [...loadedQuestion.options];
+        
+            answerChoices.forEach((choice, index) => {
+                formattedQuestion['choice' + (index + 1)] = choice;
+            });
+        
+            return formattedQuestion;
+    })
+    startGame();
+    }
 
+}
+
+function test() {
+    console.log("fertig");
+    console.log(result);
+
+}
 //CONSTANTS
 const CORRECT_BONUS = 10;
 const MAX_QUESTIONS = 8;
 
 startGame = () => {
-    console.log(test);
     questionCounter = 0;
     score = 0;
     availableQuesions = [...questions];
