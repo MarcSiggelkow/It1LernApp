@@ -80,3 +80,43 @@ function xhrHandler()
             return jsondata;
         }
 }
+
+
+
+
+fetch(url, {
+    method: 'get', // Default is 'get'
+    mode: 'cors',
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      "Authorization": "Basic " + window.btoa(username + ":" + password)
+    })
+  })
+  .then(response => response.json())
+  
+    //.then(response => response.json())
+    .then((loadedQuestions) => {
+        console.log(loadedQuestions);
+        questions = loadedQuestions.content.map(( loadedQuestion) => {
+            const formattedQuestion = {
+                question: loadedQuestion.text
+            };
+
+            const answerChoices = [... loadedQuestion.options];
+            counter +=1;
+
+            answerChoices.forEach((choice, index)  => {
+                formattedQuestion["choice" + (index+1)] = choice;
+            })
+
+            return formattedQuestion;
+        })
+        console.log(questions);
+        //questions = loadedQuestions.options;
+        //startGame();
+    })
+    .then(questions => test = questions)
+    .then(() =>  console.log(test)) 
+    .catch((err) => {
+        console.error(err);
+    });

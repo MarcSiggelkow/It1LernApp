@@ -20,20 +20,16 @@ var koopId = baseUrl.substring(baseUrl.lastIndexOf('=') + 1);
 
 switch (koopId) {
     case "mathe":
-        categorySwitch = 1;
-        console.log(categorySwitch);
+        categorySwitch = [500,501,502,503,504,505,506,507,508,509];
         break;
     case "allgemein":
-        categorySwitch = 2;
-        console.log(categorySwitch);
+        categorySwitch = [510,511,512,513,514,515,516,517,518,519];
         break;
     case "internet":
-        categorySwitch = 3;
-        console.log(categorySwitch);
+        categorySwitch = [520,521,522,523,524,525,526,527,528,529];
         break;
     case "flagge":
-        categorySwitch = 4;
-        console.log(categorySwitch);
+        categorySwitch = [530,531,532,533,534,535,536,537,538,539];
         break;
     default:
       break;
@@ -41,10 +37,15 @@ switch (koopId) {
 
 const username = "marc.siggelkow@htw-dresden.de";
 const password = "ultraSafesPasswort";
-var url = "https://irene.informatik.htw-dresden.de:8888/api/quizzes"; //+ categorySwitch;
 
-// Example request options
-fetch(url, {
+let test;
+
+
+let result  = [];
+let data = [];
+async function fetchApiCall(id){
+  var url = "https://irene.informatik.htw-dresden.de:8888/api/quizzes/"+id;
+  const response = await fetch(url, {
     method: 'get', // Default is 'get'
     mode: 'cors',
     headers: new Headers({
@@ -52,45 +53,29 @@ fetch(url, {
       "Authorization": "Basic " + window.btoa(username + ":" + password)
     })
   })
-  .then(response => response.json())
-  
+  let object = await response.json();
+  console.log(object);
+  questions = await object.map(async loadedQuestion => ({
+        question: loadedQuestion.text,
+        choice: loadedQuestion.options}));
+  //the response have to be converted to json type file, so it can be used
+  return await questions;
+};
 
-    //.then(response => response.json())
-    .then((loadedQuestions) => {
-        console.log(loadedQuestions.content);
-        console.log(loadedQuestions.options);
-        console.log(loadedQuestions.text);
-        questions = loadedQuestions.content.map(( loadedQuestion) => {
-            console.log(loadedQuestion.text);
-            console.log(counter);
-            const formattedQuestion = {
-                question: loadedQuestion.text
-            };
+//Calls the function that fetches the data
+for(i = 310; i<320;i++) {
+    data.push(fetchApiCall(i));
+}
 
-            const answerChoices = [... loadedQuestion.options];
-            counter +=1;
-
-            answerChoices.forEach((choice, index)  => {
-                formattedQuestion["choice" + (index+1)] = choice;
-            })
-
-            return formattedQuestion;
-        })
-        console.log(questions);
-        //questions = loadedQuestions.options;
-        startGame();
-    })
-    .catch((err) => {
-        console.error(err);
-    });
+console.log(data);
 
 
 //CONSTANTS
 const CORRECT_BONUS = 10;
 const MAX_QUESTIONS = 8;
 
-
 startGame = () => {
+    console.log(test);
     questionCounter = 0;
     score = 0;
     availableQuesions = [...questions];
@@ -154,11 +139,21 @@ incrementScore = (num) => {
 
 
 
-
+//Function add ID to url from what User picked for category
 function getIdFromUrl(obj)
     {
       localUrl = 'http://127.0.0.1:5500/game.html'
       location.href ="";
       location.href = localUrl +"?id=" + obj;
       //window.alert(url += "?id=" + obj);
+    }
+
+
+//Function to get Array from Fetched Array from API
+function getByValue(arr, value) {
+
+    for (var i=0, iLen=arr.length; i<iLen; i++) {
+      console.log("jhed");
+        if (arr[i].b == value) return arr[i];
+    }
     }
