@@ -3,6 +3,10 @@
   font-size: 62.5%;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 * {
   box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
@@ -40,46 +44,99 @@ h3 {
   font-weight: 500;
 }
 
-nav {
-  background-color: #3a24f0;
-  padding: 10px;
-  text-align: center;
-  width: 100%;
-
-  /* Pay special attention here! */
-  position: sticky;
-  top: 0px;
+#header {
+  height: 30vh;
+  background: url(https://cdn.pixabay.com/photo/2020/09/23/07/53/quiz-5595288_960_720.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-clip: content-box;
 }
-
-nav a {
-  color: white;
-  text-decoration: none;
-  margin: 0px 10px;
-  font-size: 1.4rem;
-}
-
-nav a:hover {
-  text-decoration: underline;
-}
-
-
-#main-nav {
-  background-color: #1e1e1e;
-  padding: 10px;
-  text-align: center;
-  width: 100%;
-  position: relative;
-  box-sizing: border-box;
-  height: 45px;
-}
-
-#main-nav.sticky {
-  position: fixed;
+#nav {
+  background-color: #000;
   top: 0;
+  width: 100%;
+  box-shadow: 0px 5px 0px #dedede;
+}
+#nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+}
+#nav li {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#nav ul li a,
+#nav ul li a:after,
+#nav ul li a:before {
+  cursor: pointer;
+  transition: all .5s;
+}
+#nav ul li a:after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 0%;
+  content: '.';
+  color: transparent;
+  background: rgb(255, 255, 255);
+  height: 1.5px;
+}
+#nav ul li a:hover:after {
+  width: 100%;
+}
+#nav ul li a:hover {
+  color: #555;
+}
+#nav ul li a {
+  font-size: 1.2rem;
+  display: block;
+  padding: 15px;
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  font-weight: 800;
+  text-transform: uppercase;
+  margin: 0 10px;
+  transition: all 1s;
+  position: relative;
 }
 
-.navbarOffsetMargin {
-  padding-top: 45px;
+#nav ul li a:after {
+  text-align: left;
+  content: '.';
+  margin: 0;
+  opacity: 0;
+}
+#nav ul li a:hover {
+  color: rgb(255, 255, 255);
+  z-index: 1;
+}
+#nav ul li a:hover:after {
+  z-index: -10;
+  animation: fill 1s forwards;
+  -webkit-animation: fill 1s forwards;
+  -moz-animation: fill 1s forwards;
+  opacity: 1;
+}
+#nav ul li img {
+  height: 96px;
+  transition: height 0.4s;
+}
+#nav.fixed {
+  position: fixed;
+  box-shadow: 5px 5px 19px 0px rgba(0, 0, 0, 0.5);
+}
+#nav.fixed ul li img {
+  height: 36px;
+}
+#nav.fixed ul li a {
+  font-size: 14px;
 }
 
 @media
@@ -159,14 +216,15 @@ nav a:hover {
     transform 200ms linear;
 }
 
+.card:hover {
+  cursor: pointer;
+}
 .card:hover .card__background{
   transform: scale(1.05) translateZ(0);
 }
-
 .card-grid:hover > .card:not(:hover) .card__background{
   filter: brightness(0.5) saturate(0) contrast(1.2) blur(20px);
 }
-
 .card__content{
   left: 0;
   padding: 24px;
@@ -242,7 +300,7 @@ nav a:hover {
 
 .btn:hover {
   cursor: pointer;
-  box-shadow: 0 0.4rem 1.4rem 0 rgba(86, 185, 235, 0.5);
+  box-shadow: 0 0.4rem 1.4rem 0 rgba(86, 185, 235, 0.678);
   transform: translateY(-0.1rem);
   transition: transform 150ms;
 }

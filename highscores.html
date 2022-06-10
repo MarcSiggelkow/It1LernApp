@@ -9,6 +9,16 @@
     <link rel="stylesheet" href="assets/css/highscores.css" />
   </head>
   <body>
+    <header id="header"> </header>
+    <nav id="nav">
+      <ul>
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a id="mathe" onclick="getIdFromUrl(this.id);">Mathe Quiz</a></li>
+        <li><a id="allgemein" onclick="getIdFromUrl(this.id);">Allgemeinwissen Quiz</a></li>
+        <li><a id="internet" onclick="getIdFromUrl(this.id);">Internettechnologien Quiz</a></li>
+        <li><a id="flagge" onclick="getIdFromUrl(this.id);">Flaggen Quiz</a></li>
+      </ul>
+    </nav>
     <div class="container">
       <div id="highScores" class="flex-center flex-column">
         <h1 id="finalScore">High Scores</h1>

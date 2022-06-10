@@ -84,10 +84,14 @@ async function fetchAsync (id) {
     // only proceed once second promise is resolved
     return data;
   }
+
+
   
-  // trigger async function
-  // log response or catch error of fetch promise
-  const firstElement = categorySwitch.shift();
+
+
+// trigger async function
+// log response or catch error of fetch promise
+const firstElement = categorySwitch.shift();
 const lastElement= categorySwitch.pop();
 
 let result  = [];
@@ -107,8 +111,11 @@ function formatQuestion(object) {
     if(result.length === 10) {
         questions = result.map((loadedQuestion) => {
             const formattedQuestion = {
+                id: loadedQuestion.id,
                 question: loadedQuestion.text,
             };
+
+
         
             const answerChoices = [...loadedQuestion.options];
         
@@ -123,11 +130,6 @@ function formatQuestion(object) {
 
 }
 
-function test() {
-    console.log("fertig");
-    console.log(result);
-
-}
 //CONSTANTS
 const CORRECT_BONUS = 10;
 const MAX_QUESTIONS = 8;
@@ -136,6 +138,7 @@ startGame = () => {
     questionCounter = 0;
     score = 0;
     availableQuesions = [...questions];
+    console.log(availableQuesions);
     getNewQuestion();
     game.classList.remove('hidden');
     loader.classList.add('hidden');
@@ -165,27 +168,48 @@ getNewQuestion = () => {
     acceptingAnswers = true;
 };
 
-choices.forEach((choice) => {
+
+//curl --user marc.siggelkow@htw-dresden.de:ultraSafesPasswort -X POST -H 'Content-Type: application/json' \
+//https://irene.informatik.htw-dresden.de:8888/api/quizzes/1/solve --data '[1]'
+
+choices.forEach((choice) => {  
     choice.addEventListener('click', (e) => {
         if (!acceptingAnswers) return;
 
         acceptingAnswers = false;
         const selectedChoice = e.target;
         const selectedAnswer = selectedChoice.dataset['number'];
+        console.log(selectedAnswer);
+ 
+        let postData = "["+selectedAnswer+"]";
+        //postData.push(selectedAnswer);
+        //console.log(postData);
+        fetch('https://irene.informatik.htw-dresden.de:8888/api/quizzes/'+currentQuestion.id+'/solve', {
+        method: 'POST',
+        mode: 'cors',
+        headers: new Headers({
+            'Content-Type': 'application/json',
+            "Authorization": "Basic " + window.btoa(username + ":" + password)
+          }),
+        body: postData
+        })
+        .then(res => res.json())
+        .then((res) => {
+            let check = true;
+            //console.log(res);
+            const classToApply =
+                check == res.success ? 'correct' : 'incorrect';
+            if (classToApply === 'correct') {
+                incrementScore(CORRECT_BONUS);
+            }
 
-        const classToApply =
-            selectedAnswer == currentQuestion.answer ? 'correct' : 'incorrect';
-
-        if (classToApply === 'correct') {
-            incrementScore(CORRECT_BONUS);
-        }
-
-        selectedChoice.parentElement.classList.add(classToApply);
-
-        setTimeout(() => {
-            selectedChoice.parentElement.classList.remove(classToApply);
-            getNewQuestion();
-        }, 1000);
+            selectedChoice.parentElement.classList.add(classToApply);
+            
+            setTimeout(() => {
+                selectedChoice.parentElement.classList.remove(classToApply);
+                getNewQuestion();
+            }, 1000);
+        })
     });
 });
 
