@@ -184,7 +184,6 @@ choices.forEach((choice) => {
         acceptingAnswers = false;
         const selectedChoice = e.target;
         const selectedAnswer = selectedChoice.dataset['number'] - 1;
-        console.log(selectedAnswer);
  
         let postData = "["+selectedAnswer+"]";
         //postData.push(selectedAnswer);
@@ -236,3 +235,14 @@ function getIdFromUrl(obj)
             //window.alert(url += "?id=" + obj);
         }
     }
+
+function myFunction() 
+{
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+        x.className += " responsive";
+    } else 
+    {
+      x.className = "topnav"      
+    }
+}

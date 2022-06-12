@@ -8,16 +8,21 @@
     <link rel="stylesheet" href="assets/css/style.css" />
   </head>
   <body>
-    <header id="header"> </header>
-    <nav id="nav">
+    <nav class="topnav" id="myTopnav">
       <ul>
-        <li><a href="index.html" class="active">Home</a></li>
-        <li><a id="mathe" onclick="getIdFromUrl(this.id);">Mathe Quiz</a></li>
-        <li><a id="allgemein" onclick="getIdFromUrl(this.id);">Allgemeinwissen Quiz</a></li>
-        <li><a id="internet" onclick="getIdFromUrl(this.id);">Internettechnologien Quiz</a></li>
-        <li><a id="flagge" onclick="getIdFromUrl(this.id);">Flaggen Quiz</a></li>
-      </ul>
-    </nav>
+        <a id="home" onclick="getIdFromUrl(this.id);">Home</a>
+        <a id="mathe" onclick="getIdFromUrl(this.id);">Mathe Quiz</a>
+        <a id="allgemein" onclick="getIdFromUrl(this.id);">Allgemeinwissen Quiz</a>
+        <a id="internet" onclick="getIdFromUrl(this.id);">Internettechnologien Quiz</a>
+        <a id="flagge" onclick="getIdFromUrl(this.id);">Flaggen Quiz</a>
+        <a id="highscore" onclick="getIdFromUrl(this.id);" >Highscores</a>
+        <div class="hamburger" onclick="myFunction()">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+  </nav>
+    <header id="header"> </header>
     <div class="container">
       <div id="end" class="flex-center flex-column">
         <h1 id="finalScore"></h1>
