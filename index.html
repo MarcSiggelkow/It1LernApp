@@ -4,17 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Quick Quiz</title>
+    <title>Web Quiz App</title>
     <link rel="stylesheet" href="assets/css/style.css" />
   </head>
   <body>
     <nav id="nav">
       <ul>
-        <li><a href="index.html" class="active">Home</a></li>
+        <li><a id="home" onclick="getIdFromUrl(this.id);" class="active">Home</a></li>
         <li><a id="mathe" onclick="getIdFromUrl(this.id);">Mathe Quiz</a></li>
         <li><a id="allgemein" onclick="getIdFromUrl(this.id);">Allgemeinwissen Quiz</a></li>
         <li><a id="internet" onclick="getIdFromUrl(this.id);">Internettechnologien Quiz</a></li>
         <li><a id="flagge" onclick="getIdFromUrl(this.id);">Flaggen Quiz</a></li>
+        <li><a href="highscores.html" >Highscores</a></li>
       </ul>
     </nav>
     <header id="header"> </header>
@@ -24,35 +25,35 @@
           <a id="mathe" class="card"  onclick="getIdFromUrl(this.id);">
             <div class="card__background" style="background-image: url(assets/img/mathBackground.jpg)"></div>
             <div class="card__content">
-              <p class="card__category">Category</p>
+              <p class="card__category">Kategorie</p>
               <h3 class="card__heading">Zum Mathe Quiz</h3>
             </div>
           </a>
           <a id="allgemein" class="card" onclick="getIdFromUrl(this.id);">
             <div class="card__background" style="background-image: url(assets/img/allgemeinWissen.jpg)"></div>
             <div class="card__content">
-              <p class="card__category">Category</p>
+              <p class="card__category">Kategorie</p>
               <h3 class="card__heading">Zum Allgemein-<br>wissens Quiz</h3>
             </div>
           </a>
           <a id="internet" class="card" onclick="getIdFromUrl(this.id);">
             <div class="card__background" style="background-image: url(assets/img/internettechnologieBackground.jpg)"></div>
             <div class="card__content">
-              <p class="card__category">Category</p>
+              <p class="card__category">Kategorie</p>
               <h3 class="card__heading">Zum Internet-<br>technologien Quiz</h3>
             </div>
           </a>
           <a id="flagge" class="card" onclick="getIdFromUrl(this.id);">
             <div class="card__background" style="background-image: url(assets/img/flaggenBackground.jpg)"></div>
             <div class="card__content">
-              <p class="card__category">Category</p>
+              <p class="card__category">Kategorie</p>
               <h3 class="card__heading">Zum Flaggen Quiz</h3>
             </div>
           </a>
         <div>
       </section>
     </div>
-    <div class="container">
+    <!--<div class="container">
       <div id="home" class="flex-center flex-column">
         <h1>Quick Quiz</h1>
         <a class="btn" href="/game.html">Play</a>
@@ -73,8 +74,36 @@
         <a class="btn" href="/game.html">Play</a>
         <a class="btn" href="/highscores.html">High Scores</a>
       </div>
-    </div>
+    </div> -->
+
+    <footer>
+      <div class="footer-content">
+          <h3>Learny - Die Web LernApp</h3>
+          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+      </div>
+      <div class="footer-bottom">
+          <p>copyright &copy;2022 <a href="#">Marc Siggelkow</a>  </p>
+                  <div class="footer-menu">
+                    <ul class="f-menu">
+                      <li><a href="">Impressum</a></li>
+                      <li><a href="">Datenschutz</a></li>
+                      <li><a href="">Kontakt</a></li>
+                      <li><a href="">Blog</a></li>
+                    </ul>
+                  </div>
+      </div>
+  </footer>
+
     <script src="assets/js/stickynavbar.js"></script>
     <script src="assets/js/game.js"></script>
+
+    <script>
+      // Service Worker registrieren für PWA
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('scripts/sw.js')
+          .then(reg => console.log(reg))
+          .catch(err => console.log(err));
+      }
+  </script>
   </body>
 </html>

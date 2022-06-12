@@ -1,3 +1,5 @@
+"use strict";
+
 const question = document.getElementById('question');
 const choices = Array.from(document.getElementsByClassName('choice-text'));
 const progressText = document.getElementById('progressText');
@@ -20,19 +22,19 @@ var koopId = baseUrl.substring(baseUrl.lastIndexOf('=') + 1);
 
 switch (koopId) {
     case "mathe":
-        categorySwitch = [300,309];
+        categorySwitch = [469,478];
         break;
     case "allgemein":
-        categorySwitch = [310,319];
+        categorySwitch = [506,517];
         break;
     case "internet":
-        categorySwitch = [320,329];
+        categorySwitch = [524,533];
         break;
     case "flagge":
         categorySwitch = [330,339];
         break;
     default:
-      break;
+        break;
   }
 
 const username = "marc.siggelkow@htw-dresden.de";
@@ -98,7 +100,7 @@ let result  = [];
 let data = [];
 
 //Calls the function that fetches the data from API
-for(i = firstElement; i<= lastElement;i++) {
+for(let i = firstElement; i<= lastElement;i++) {
     fetchAsync(i)
         .then(data => formatQuestion(data))
         .catch(reason => console.log(reason.message))
@@ -110,6 +112,7 @@ function formatQuestion(object) {
     console.log(result);
     if(result.length === 10) {
         questions = result.map((loadedQuestion) => {
+            console.log(loadedQuestion.id)
             const formattedQuestion = {
                 id: loadedQuestion.id,
                 question: loadedQuestion.text,
@@ -134,7 +137,7 @@ function formatQuestion(object) {
 const CORRECT_BONUS = 10;
 const MAX_QUESTIONS = 8;
 
-startGame = () => {
+let startGame = () => {
     questionCounter = 0;
     score = 0;
     availableQuesions = [...questions];
@@ -144,11 +147,12 @@ startGame = () => {
     loader.classList.add('hidden');
 };
 
-getNewQuestion = () => {
+let getNewQuestion = () => {
     if (availableQuesions.length === 0 || questionCounter >= MAX_QUESTIONS) {
         localStorage.setItem('mostRecentScore', score);
         //go to the end page
-        return window.location.assign('/end.html');
+        let endScreen = window.location.origin +"/end.html";
+        return window.location.assign(endScreen);
     }
     questionCounter++;
     progressText.innerText = `Question ${questionCounter}/${MAX_QUESTIONS}`;
@@ -157,6 +161,7 @@ getNewQuestion = () => {
 
     const questionIndex = Math.floor(Math.random() * availableQuesions.length);
     currentQuestion = availableQuesions[questionIndex];
+
     question.innerHTML = currentQuestion.question;
 
     choices.forEach((choice) => {
@@ -178,7 +183,7 @@ choices.forEach((choice) => {
 
         acceptingAnswers = false;
         const selectedChoice = e.target;
-        const selectedAnswer = selectedChoice.dataset['number'];
+        const selectedAnswer = selectedChoice.dataset['number'] - 1;
         console.log(selectedAnswer);
  
         let postData = "["+selectedAnswer+"]";
@@ -213,7 +218,7 @@ choices.forEach((choice) => {
     });
 });
 
-incrementScore = (num) => {
+let incrementScore = (num) => {
     score += num;
     scoreText.innerText = score;
 };
@@ -223,18 +228,11 @@ incrementScore = (num) => {
 //Function add ID to url from what User picked for category
 function getIdFromUrl(obj)
     {
-      localUrl = 'http://127.0.0.1:5500/game.html'
-      location.href ="";
-      location.href = localUrl +"?id=" + obj;
-      //window.alert(url += "?id=" + obj);
-    }
-
-
-//Function to get Array from Fetched Array from API
-function getByValue(arr, value) {
-
-    for (var i=0, iLen=arr.length; i<iLen; i++) {
-      console.log("jhed");
-        if (arr[i].b == value) return arr[i];
-    }
+        if(obj === "home") {
+            location.href = window.location.origin +"/index.html";
+        } else {
+            location.href ="";
+            location.href = window.location.origin +"/game.html?id=" + obj;
+            //window.alert(url += "?id=" + obj);
+        }
     }

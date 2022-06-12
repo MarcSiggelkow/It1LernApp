@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Congrats!</title>
+    <title>Glückwunsch!</title>
     <link rel="stylesheet" href="assets/css/style.css" />
   </head>
   <body>
@@ -35,13 +35,21 @@
             onclick="saveHighScore(event)"
             disabled
           >
-            Save
+            Speichern
           </button>
         </form>
         <a class="btn" href="/game.html">Play Again</a>
-        <a class="btn" href="/index.html">Go Home</a>
+        <a class="btn" href="/index.html">Zur Startseite</a>
       </div>
     </div>
     <script src="assets/js/end.js"></script>
+    <script>
+      // Service Worker registrieren für PWA
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('scripts/sw.js')
+          .then(reg => console.log(reg))
+          .catch(err => console.log(err));
+      }
+  </script>
   </body>
 </html>
