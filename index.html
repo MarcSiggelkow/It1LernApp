@@ -5,18 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Web Quiz App</title>
+    <link rel="icon" type="image/x-icon" href="assets/img/logo_small_icon_only.png">
     <link rel="stylesheet" href="assets/css/style.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <body>
     <nav class="topnav" id="myTopnav">
+          <a href="/"><img src="assets/img/logo_white_large.png" height="30" /></a>
           <a id="home" onclick="getIdFromUrl(this.id);">Home</a>
           <a id="mathe" onclick="getIdFromUrl(this.id);">Mathe Quiz</a>
           <a id="allgemein" onclick="getIdFromUrl(this.id);">Allgemeinwissen Quiz</a>
           <a id="internet" onclick="getIdFromUrl(this.id);">Internettechnologien Quiz</a>
           <a id="flagge" onclick="getIdFromUrl(this.id);">Flaggen Quiz</a>
-          <a href="highscores.html" >Highscores</a>
-          <div class="hamburger" onclick="myFunction()">
+          <a id="highscores" onclick="getIdFromUrl(this.id);" >Highscores</a>
+          <div class="hamburger" id="ham" onclick="myFunction()">
             <span class="bar"></span>
             <span class="bar"></span>
             <span class="bar"></span>
@@ -58,28 +59,6 @@
         <div>
       </section>
     </div>
-    <!--<div class="container">
-      <div id="home" class="flex-center flex-column">
-        <h1>Quick Quiz</h1>
-        <a class="btn" href="/game.html">Play</a>
-        <a class="btn" href="/highscores.html">High Scores</a>
-      </div>
-      <div id="home" class="flex-center flex-column">
-        <h1>Quick Quiz</h1>
-        <a class="btn" href="/game.html">Play</a>
-        <a class="btn" href="/highscores.html">High Scores</a>
-      </div>
-      <div id="home" class="flex-center flex-column">
-        <h1>Quick Quiz</h1>
-        <a class="btn" href="/game.html">Play</a>
-        <a class="btn" href="/highscores.html">High Scores</a>
-      </div>
-      <div id="home" class="flex-center flex-column">
-        <h1>Quick Quiz</h1>
-        <a class="btn" href="/game.html">Play</a>
-        <a class="btn" href="/highscores.html">High Scores</a>
-      </div>
-    </div> -->
 
     <footer>
       <div class="footer-content">

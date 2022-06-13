@@ -1,22 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>High Scores</title>
+    <link rel="icon" type="image/x-icon" href="assets/img/logo_small_icon_only.png">
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/highscores.css" />
   </head>
-  <body>
+  <body onLoad="window.scroll(0, 410)">
     <nav class="topnav" id="myTopnav">
       <ul>
+        <a href="/"><img src="assets/img/logo_white_large.png" height="30" /></a>
         <a id="home" onclick="getIdFromUrl(this.id);">Home</a>
         <a id="mathe" onclick="getIdFromUrl(this.id);">Mathe Quiz</a>
         <a id="allgemein" onclick="getIdFromUrl(this.id);">Allgemeinwissen Quiz</a>
         <a id="internet" onclick="getIdFromUrl(this.id);">Internettechnologien Quiz</a>
         <a id="flagge" onclick="getIdFromUrl(this.id);">Flaggen Quiz</a>
-        <a id="highscore" onclick="getIdFromUrl(this.id);" >Highscores</a>
+        <a id="highscores" onclick="getIdFromUrl(this.id);" >Highscores</a>
         <div class="hamburger" onclick="myFunction()">
           <span class="bar"></span>
           <span class="bar"></span>
@@ -28,10 +30,11 @@
       <div id="highScores" class="flex-center flex-column">
         <h1 id="finalScore">High Scores</h1>
         <ul id="highScoresList"></ul>
-        <a class="btn" href="index.html">zur Startseite</a>
+        <a class="btn" id="home" onclick="getIdFromUrl(this.id);">zur Startseite</a>
       </div>
     </div>
     <script src="assets/js/highscores.js"></script>
+    <script src="assets/js/stickynavbar.js"></script>
 
     
   </body>

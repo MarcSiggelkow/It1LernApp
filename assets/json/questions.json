@@ -1,8 +1,0 @@
-[ 
-    {
-      "id": 1,
-      "title": "Mathe Frage",
-      "text": "Ich bin eine Mathe Frage",
-      "options": ["Robot", "Tea leaf", "Cup of coffee", "Bug"]
-    }
-]

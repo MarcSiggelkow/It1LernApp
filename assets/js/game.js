@@ -151,7 +151,7 @@ let getNewQuestion = () => {
     if (availableQuesions.length === 0 || questionCounter >= MAX_QUESTIONS) {
         localStorage.setItem('mostRecentScore', score);
         //go to the end page
-        let endScreen = window.location.origin +"/end.html";
+        let endScreen = window.location.origin +"/~s82088/end.html";
         return window.location.assign(endScreen);
     }
     questionCounter++;
@@ -162,7 +162,7 @@ let getNewQuestion = () => {
     const questionIndex = Math.floor(Math.random() * availableQuesions.length);
     currentQuestion = availableQuesions[questionIndex];
 
-    question.innerHTML = currentQuestion.question;
+    question.innerHTML =  currentQuestion.question;
 
     choices.forEach((choice) => {
         const number = choice.dataset['number'];
@@ -173,9 +173,6 @@ let getNewQuestion = () => {
     acceptingAnswers = true;
 };
 
-
-//curl --user marc.siggelkow@htw-dresden.de:ultraSafesPasswort -X POST -H 'Content-Type: application/json' \
-//https://irene.informatik.htw-dresden.de:8888/api/quizzes/1/solve --data '[1]'
 
 choices.forEach((choice) => {  
     choice.addEventListener('click', (e) => {
@@ -222,27 +219,3 @@ let incrementScore = (num) => {
     scoreText.innerText = score;
 };
 
-
-
-//Function add ID to url from what User picked for category
-function getIdFromUrl(obj)
-    {
-        if(obj === "home") {
-            location.href = window.location.origin +"/index.html";
-        } else {
-            location.href ="";
-            location.href = window.location.origin +"/game.html?id=" + obj;
-            //window.alert(url += "?id=" + obj);
-        }
-    }
-
-function myFunction() 
-{
-    var x = document.getElementById("myTopnav");
-    if (x.className === "topnav") {
-        x.className += " responsive";
-    } else 
-    {
-      x.className = "topnav"      
-    }
-}

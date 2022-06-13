@@ -5,17 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Glückwunsch!</title>
+    <link rel="icon" type="image/x-icon" href="assets/img/logo_small_icon_only.png">
     <link rel="stylesheet" href="assets/css/style.css" />
   </head>
-  <body>
+  <body onLoad="window.scroll(0, 410)">
     <nav class="topnav" id="myTopnav">
       <ul>
+        <a href="/"><img src="assets/img/logo_white_large.png" height="30" /></a>
         <a id="home" onclick="getIdFromUrl(this.id);">Home</a>
         <a id="mathe" onclick="getIdFromUrl(this.id);">Mathe Quiz</a>
         <a id="allgemein" onclick="getIdFromUrl(this.id);">Allgemeinwissen Quiz</a>
         <a id="internet" onclick="getIdFromUrl(this.id);">Internettechnologien Quiz</a>
         <a id="flagge" onclick="getIdFromUrl(this.id);">Flaggen Quiz</a>
-        <a id="highscore" onclick="getIdFromUrl(this.id);" >Highscores</a>
+        <a id="highscores" onclick="getIdFromUrl(this.id);" >Highscores</a>
         <div class="hamburger" onclick="myFunction()">
           <span class="bar"></span>
           <span class="bar"></span>
@@ -31,7 +33,7 @@
             type="text"
             name="username"
             id="username"
-            placeholder="username"
+            placeholder="Username"
           />
           <button
             type="submit"
@@ -43,11 +45,11 @@
             Speichern
           </button>
         </form>
-        <a class="btn" href="/game.html">Play Again</a>
-        <a class="btn" href="/index.html">Zur Startseite</a>
+        <a class="btn"  id="home" onclick="getIdFromUrl(this.id);">Zur Startseite</a>
       </div>
     </div>
     <script src="assets/js/end.js"></script>
+    <script src="assets/js/stickynavbar.js"></script>
     <script>
       // Service Worker registrieren für PWA
       if ('serviceWorker' in navigator) {
