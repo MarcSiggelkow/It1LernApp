@@ -101,7 +101,7 @@ h3 {
   background-color: white;
 }
 
-@media screen and (max-width: 960px) {
+@media screen and (max-width: 1130px) {
   .topnav a:not(:first-child) {display: none;}
   .topnav .hamburger {
     float: right;
@@ -113,7 +113,7 @@ h3 {
   }
 }
 
-@media screen and (max-width: 960px) {
+@media screen and (max-width: 1130px) {
   .topnav.responsive {position: fixed;}
   .topnav.responsive .hamburger {
     position: absolute;

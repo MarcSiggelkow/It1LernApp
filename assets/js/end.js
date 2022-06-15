@@ -2,6 +2,7 @@ const username = document.getElementById('username');
 const saveScoreBtn = document.getElementById('saveScoreBtn');
 const finalScore = document.getElementById('finalScore');
 const mostRecentScore = localStorage.getItem('mostRecentScore');
+const mostRecentQuiz = localStorage.getItem('mostRecentQuiz');
 
 const highScores = JSON.parse(localStorage.getItem('highScores')) || [];
 
@@ -17,6 +18,7 @@ saveHighScore = (e) => {
     e.preventDefault();
 
     const score = {
+        quiz: mostRecentQuiz,
         score: mostRecentScore,
         name: username.value,
     };
@@ -25,6 +27,7 @@ saveHighScore = (e) => {
     highScores.splice(5);
 
     localStorage.setItem('highScores', JSON.stringify(highScores));
-    let endScreen = window.location.origin +"/~s82088/highscores.html";
+    const firstPath = location.pathname.split('/')[1];
+    let endScreen = window.location.origin+"/"+firstPath+"/highscores.html";
     window.location.assign(endScreen);
 };

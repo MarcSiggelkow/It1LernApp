@@ -11,12 +11,12 @@
   <body onLoad="window.scroll(0, 410)">
     <nav class="topnav" id="myTopnav">
       <ul>
-        <a href="/"><img src="assets/img/logo_white_large.png" height="30" /></a>
+        <a id="home" onclick="getIdFromUrl(this.id);"><img src="assets/img/logo_white_large.png" height="30" /></a>
         <a id="home" onclick="getIdFromUrl(this.id);">Home</a>
         <a id="mathe" onclick="getIdFromUrl(this.id);">Mathe Quiz</a>
         <a id="allgemein" onclick="getIdFromUrl(this.id);">Allgemeinwissen Quiz</a>
         <a id="internet" onclick="getIdFromUrl(this.id);">Internettechnologien Quiz</a>
-        <a id="flagge" onclick="getIdFromUrl(this.id);">Flaggen Quiz</a>
+        <a id="hauptstadt" onclick="getIdFromUrl(this.id);">Hauptstadt Quiz</a>
         <a id="highscores" onclick="getIdFromUrl(this.id);" >Highscores</a>
         <div class="hamburger" onclick="myFunction()">
           <span class="bar"></span>
@@ -53,7 +53,7 @@
     <script>
       // Service Worker registrieren für PWA
       if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('scripts/sw.js')
+        navigator.serviceWorker.register('/~s82088/assets/js/sw.js')
           .then(reg => console.log(reg))
           .catch(err => console.log(err));
       }

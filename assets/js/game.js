@@ -20,6 +20,9 @@ let counter = 0;
 var baseUrl = (window.location).href;
 var koopId = baseUrl.substring(baseUrl.lastIndexOf('=') + 1);
 
+
+//Sets the range of ID's for the Questions we will fetch later from  the  API
+// based on which category the user picked
 switch (koopId) {
     case "mathe":
         categorySwitch = [469,478];
@@ -30,8 +33,8 @@ switch (koopId) {
     case "internet":
         categorySwitch = [524,533];
         break;
-    case "flagge":
-        categorySwitch = [330,339];
+    case "hauptstadt":
+        categorySwitch = [1563,1572];
         break;
     default:
         break;
@@ -43,38 +46,12 @@ const password = "ultraSafesPasswort";
 
 
 
-/*async function fetchApiCall(id){
-  var url = "https://irene.informatik.htw-dresden.de:8888/api/quizzes/"+id;
-  const response = await fetch(url, {
-    method: 'get', // Default is 'get'
-    mode: 'cors',
-    headers: new Headers({
-      'Content-Type': 'application/json',
-      "Authorization": "Basic " + window.btoa(username + ":" + password)
-    })
-  })
-  //the response have to be converted to json type file, so it can be used
-  let object = await response.json();
-  
-  appendObject(object);  
-};
-
-function formatQuestions(object) {
-    console.log(object);
-};
-
-function appendObject(object) {
-    data.push(object);
-    console.log(data),
-};*/
-
-
-// async function
+// async function for Calling the API
 async function fetchAsync (id) {
     var url = "https://irene.informatik.htw-dresden.de:8888/api/quizzes/"+id;
     // await response of fetch call
     let response = await fetch(url, {
-        method: 'get', // Default is 'get'
+        method: 'get',
         mode: 'cors',
         headers: new Headers({
           'Content-Type': 'application/json',
@@ -91,14 +68,16 @@ async function fetchAsync (id) {
   
 
 
-// trigger async function
-// log response or catch error of fetch promise
+
+// Getting first and Last ID from Question Array
 const firstElement = categorySwitch.shift();
 const lastElement= categorySwitch.pop();
 
 let result  = [];
 let data = [];
 
+// trigger async function for range of Questions based on ID
+// log response or catch error of fetch promise
 //Calls the function that fetches the data from API
 for(let i = firstElement; i<= lastElement;i++) {
     fetchAsync(i)
@@ -108,20 +87,20 @@ for(let i = firstElement; i<= lastElement;i++) {
 
 
 function formatQuestion(object) {
+    //pushing all fetched Objects into result
     result.push(object);
-    console.log(result);
+    //when we have all 10 Questions -> we set them up to use them
     if(result.length === 10) {
+        // iterating over all objects in "result"
         questions = result.map((loadedQuestion) => {
-            console.log(loadedQuestion.id)
             const formattedQuestion = {
                 id: loadedQuestion.id,
                 question: loadedQuestion.text,
             };
-
-
-        
+       
             const answerChoices = [...loadedQuestion.options];
-        
+            //setting ID which we will use later for calling API to solve quiz
+            // +1 because array is [0,1,2,3] but API id needs to be [1,2,3,4]
             answerChoices.forEach((choice, index) => {
                 formattedQuestion['choice' + (index + 1)] = choice;
             });
@@ -141,29 +120,33 @@ let startGame = () => {
     questionCounter = 0;
     score = 0;
     availableQuesions = [...questions];
-    console.log(availableQuesions);
     getNewQuestion();
     game.classList.remove('hidden');
     loader.classList.add('hidden');
 };
 
 let getNewQuestion = () => {
+    //when end is reached -> store Score in local storage and return user to end  page
     if (availableQuesions.length === 0 || questionCounter >= MAX_QUESTIONS) {
         localStorage.setItem('mostRecentScore', score);
+        localStorage.setItem('mostRecentQuiz', koopId);
         //go to the end page
-        let endScreen = window.location.origin +"/~s82088/end.html";
+        const firstPath = location.pathname.split('/')[1];
+        let endScreen = window.location.origin+"/"+firstPath+"/end.html?id="+koopId;
         return window.location.assign(endScreen);
     }
+    //Update Question text
     questionCounter++;
     progressText.innerText = `Question ${questionCounter}/${MAX_QUESTIONS}`;
     //Update the progress bar
     progressBarFull.style.width = `${(questionCounter / MAX_QUESTIONS) * 100}%`;
-
+    //picking random Question out of index
     const questionIndex = Math.floor(Math.random() * availableQuesions.length);
     currentQuestion = availableQuesions[questionIndex];
 
+    //Update HTML with current question
     question.innerHTML =  currentQuestion.question;
-
+    //Updating HTML with answer options
     choices.forEach((choice) => {
         const number = choice.dataset['number'];
         choice.innerHTML = currentQuestion['choice' + number];
@@ -173,7 +156,7 @@ let getNewQuestion = () => {
     acceptingAnswers = true;
 };
 
-
+//Eventlistener User Click
 choices.forEach((choice) => {  
     choice.addEventListener('click', (e) => {
         if (!acceptingAnswers) return;
@@ -182,9 +165,8 @@ choices.forEach((choice) => {
         const selectedChoice = e.target;
         const selectedAnswer = selectedChoice.dataset['number'] - 1;
  
+        //Calling API to solve Quiz
         let postData = "["+selectedAnswer+"]";
-        //postData.push(selectedAnswer);
-        //console.log(postData);
         fetch('https://irene.informatik.htw-dresden.de:8888/api/quizzes/'+currentQuestion.id+'/solve', {
         method: 'POST',
         mode: 'cors',
@@ -197,7 +179,6 @@ choices.forEach((choice) => {
         .then(res => res.json())
         .then((res) => {
             let check = true;
-            //console.log(res);
             const classToApply =
                 check == res.success ? 'correct' : 'incorrect';
             if (classToApply === 'correct') {

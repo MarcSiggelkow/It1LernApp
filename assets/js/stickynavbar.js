@@ -1,4 +1,6 @@
 
+
+
   function myFunction() 
   {
       var x = document.getElementById("myTopnav");
@@ -17,14 +19,16 @@
 
   //Function add ID to url from what User picked for category
 function getIdFromUrl(obj)
-{
+{   
+    //fixes problem that href works on WebServer (where first Path is /~s82088/)
+    //but not on localHost anymore
+    const firstPath = location.pathname.split('/')[1];
     if(obj === "home") {
-        location.href = window.location.origin +"/~s82088/index.html";
+        location.href = window.location.origin+"/"+firstPath+"/index.html";
     } else if (obj === "highscores") {
-        location.href = window.location.origin +"/~s82088/highscores.html";
+        location.href = window.location.origin +"/"+firstPath +"/highscores.html";
     } else {
         location.href ="";
-        location.href = window.location.origin +"/~s82088/game.html?id=" + obj;
-        //window.alert(url += "?id=" + obj);
+        location.href = window.location.origin +"/"+firstPath +"/game.html?id=" + obj;
     }
 }
