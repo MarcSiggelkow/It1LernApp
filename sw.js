@@ -24,12 +24,29 @@ let cachedFiles = [
     "game.css"
 ];
 
-// Self is the recent ServiceWorker
-self.addEventListener ("install", function (evt) {
-    console.log ("Service Worker Install Event ");
-    evt.waitUntil (
+
+
+self.addEventListener("install", (event) => {
+    console.log("Service Worker : Installed!")
+
+    event.waitUntil(
+        
+        (async() => {
+            try {
+                cache_obj = await caches.open(cacheName)
+                cache_obj.addAll(cachedFiles)
+            }
+            catch{
+                console.log("error occured while caching...")
+            }
+        })()
+    )
+} )
+
+    /*evt.waitUntil (
         // open with result of  open message
-        caches.open (cacheName).then (function (cache) {
+        caches.open (cacheName)
+        .then (function (cache) {
             console.log ("Dateien für den Cache");
             return cache.addAll (cachedFiles);
         }).then (function () {
@@ -37,8 +54,8 @@ self.addEventListener ("install", function (evt) {
         }).catch ( function (err) {
             console.log ("Cache Failed", err);
         })
-    );
-});
+    );*/
+
 
 self.addEventListener("fetch", function (event) {
     event.respondWith(

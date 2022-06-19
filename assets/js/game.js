@@ -16,16 +16,19 @@ let categorySwitch = 0;
 let questions = [];
 let counter = 0;
 
+
+
+
+
+
 //Gets the ID from the URL based on which category the User picked
 var baseUrl = (window.location).href;
 var koopId = baseUrl.substring(baseUrl.lastIndexOf('=') + 1);
-
-
 //Sets the range of ID's for the Questions we will fetch later from  the  API
 // based on which category the user picked
 switch (koopId) {
     case "mathe":
-        categorySwitch = [469,478];
+        categorySwitch = [1701,1710];
         break;
     case "allgemein":
         categorySwitch = [506,517];
@@ -42,8 +45,6 @@ switch (koopId) {
 
 const username = "marc.siggelkow@htw-dresden.de";
 const password = "ultraSafesPasswort";
-
-
 
 
 // async function for Calling the API
@@ -63,11 +64,6 @@ async function fetchAsync (id) {
     // only proceed once second promise is resolved
     return data;
   }
-
-
-  
-
-
 
 // Getting first and Last ID from Question Array
 const firstElement = categorySwitch.shift();
@@ -144,22 +140,35 @@ let getNewQuestion = () => {
     const questionIndex = Math.floor(Math.random() * availableQuesions.length);
     currentQuestion = availableQuesions[questionIndex];
 
-    //Update HTML with current question
-    question.innerHTML =  currentQuestion.question;
-    //Updating HTML with answer options
-    choices.forEach((choice) => {
-        const number = choice.dataset['number'];
-        choice.innerHTML = currentQuestion['choice' + number];
-    });
-
-    availableQuesions.splice(questionIndex, 1);
+    if(koopId === "mathe") {
+        //Update HTML with current question
+        question.innerHTML = katex.renderToString(`${currentQuestion.question}`);
+        //question.innerHTML =  currentQuestion.question;
+        //Updating HTML with answer options
+        choices.forEach((choice) => {
+            const number = choice.dataset['number'];
+            choice.innerHTML = katex.renderToString(currentQuestion['choice' + number]);
+        });
+        availableQuesions.splice(questionIndex, 1);
+    } else {
+        //Update HTML with current question
+        question.innerHTML =`${currentQuestion.question}`;
+        //question.innerHTML =  currentQuestion.question;
+        //Updating HTML with answer options
+        choices.forEach((choice) => {
+            const number = choice.dataset['number'];
+            choice.innerHTML =  currentQuestion['choice' + number];
+        });
+        availableQuesions.splice(questionIndex, 1);
+    }
     acceptingAnswers = true;
 };
+
+
 
 //Eventlistener User Click
 choices.forEach((choice) => {  
     choice.addEventListener('click', (e) => {
-        if (!acceptingAnswers) return;
 
         acceptingAnswers = false;
         const selectedChoice = e.target;
